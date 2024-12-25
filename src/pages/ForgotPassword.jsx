@@ -6,9 +6,7 @@ import {ReactComponent as ArrowRightIcon} from "../assets/svg/keyboardArrowRight
 
 function ForgotPassword(){
     const [email, setEmail] = useState("");
-    const onChange = e => {
-
-    }
+    const onChange = (e) => setEmail(e.target.value);
 
     const onSubmit = async (e) => {
         e.preventDefault();
