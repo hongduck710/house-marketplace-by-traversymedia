@@ -93,7 +93,7 @@ function CreateListing(){
     }
 
     if(loading) {
-        <Spinner />
+        return <Spinner />
     }
 
 
