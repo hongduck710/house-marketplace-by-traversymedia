@@ -116,7 +116,7 @@ function CreateListing(){
                            Sale
                         </button>
                         <button
-                        typoe="button"
+                        type="button"
                         className={type === "rent" ? "formButtonActive" : "formButton"}
                         id="type"
                         value="rent"
