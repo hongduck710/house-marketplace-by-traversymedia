@@ -74,10 +74,9 @@ function CreateListing(){
 
         setLoading(true);
 
-
-        if(discountedPrice >= regularPrice){
+        if(discountedPrice >= regularPrice) {
             setLoading(false);
-            toast.error("Discounted price needs to be less than regular price");
+            toast.error("Discounted Price needs to be less than regular price");
             return;
         }
 
@@ -86,79 +85,35 @@ function CreateListing(){
             toast.error("Max 6 images");
             return;
         }
-/* 구글 위치 api를 사용하기 위해선 결제정보를 입력해야 하기 때문에 주석처리 함
+
         let geolocation = {};
         let location;
 
-        if(geolocationEnabled) {
+        if(geolocationEnabled){
             const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`);
             const data = await response.json();
-
+            
             geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
             geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
+
             location = data.status === "ZERO_RESULTS" 
             ? undefined 
-            : data.results[0]?.formatted_address; 
+            : data.results[0]?.formatted_address;
 
-            if(location === undefined || location.includes("undefined")){
+            if( location === undefined || location.includes("undefined") ){
                 setLoading(false);
                 toast.error("Please enter a correct address");
                 return;
             }
-        } else {
+
+            console.log(data);
+            
+        }else{
             geolocation.lat = latitude;
             geolocation.lng = longitude;
             location = address;
             console.log(geolocation, location);
         }
-*/
-        // Store images in firebase
-        const storeImage = async (image) => {
-            return new Promise((resolve, reject) => {
-                const storage = getStorage();
-                const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
-
-                const storageRef = ref(storage, "images/" + fileName);
-
-                const uploadTask = uploadBytesResumable(storageRef, image);
-
-                uploadTask.on('state_changed', 
-                    (snapshot) => {
-
-                      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                      console.log('Upload is ' + progress + '% done');
-                      switch (snapshot.state) {
-                        case 'paused':
-                          console.log('Upload is paused');
-                          break;
-                        case 'running':
-                          console.log('Upload is running');
-                          break;
-                      }
-                    }, 
-                    (error) => {
-                      reject(error);
-                    }, 
-                    () => {
-                      // Handle successful uploads on complete
-                      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        resolve(downloadURL);
-                      });
-                    }
-                );
-            });
-        }
-
-        const imgUrls = await Promise.all(
-            [...images].map((image) => storeImage(image))
-        ).catch(() => {
-            setLoading(false);
-            toast.error("Images not uploaded");
-            return;
-        });
-
-        console.log(imgUrls);
 
         setLoading(false);
     }
