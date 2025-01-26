@@ -112,7 +112,7 @@ function CreateListing(){
         }else{
             geolocation.lat = latitude;
             geolocation.lng = longitude;
-
+         
             console.log(geolocation);
         }
 
@@ -163,7 +163,7 @@ function CreateListing(){
             return;
         });
 
-        const formDataCopy ={
+        const formDataCopy = {
             ...formData,
             imgUrls,
             geolocation,
@@ -300,6 +300,7 @@ function CreateListing(){
                         className={!parking && parking !== null ? "formButtonActive" : "formButton"}
                         type="button"
                         id="parking"
+                        value={false}
                         onClick={onMutate}
                         >
                             No

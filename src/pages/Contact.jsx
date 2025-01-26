@@ -5,7 +5,7 @@ import {db} from "../firebase.config";
 import {toast} from "react-toastify";
 
 function Contact(){
-    const [message, setMessage] = useState();
+    const [message, setMessage] = useState("");
     const [landlord, setLandlord] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -53,7 +53,7 @@ function Contact(){
                             >
                             </textarea>
                         </div>
-                        <a href={`mailto:${landlord.email}?Subject=${searchParams.get("listingName")}&body=${message}`}>
+                        <a href={`mailto:${landlord.email}?subject=${searchParams.get("listingName")}&body=${message}`}>
                             <button type="button" className="primaryButton">Send Message</button>
                         </a>
                     </form>
