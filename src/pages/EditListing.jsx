@@ -16,6 +16,7 @@ import Spinner from "../components/Spinner";
 
 
 function EditListing(){
+    // eslint-disable-next-line
     const [geolocationEnabled, setGeolocationEnabled] = useState(true); 
     const [loading, setLoading] = useState(false);
     const [listing, setListing] = useState(false);
@@ -168,6 +169,8 @@ function EditListing(){
                         case 'running':
                           console.log('Upload is running');
                           break;
+                        default:
+                          break;      
                       }
                     }, 
                     (error) => {
